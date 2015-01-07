@@ -89,17 +89,20 @@ public interface Element
      * Check the element {@code elem} does not have attributes other than {@code names}.
      *
      * {@code names} contains non-qualified names, for allowed attributes.  The
-     * element can have other attributes in other namespace (not in the HTTP
-     * Client namespace) but no attributes in no namespace.
+     * element can have other attributes in other namespace (not in the forbidden
+     * namespaces) but no attributes in no namespace.
      *
      * @param names The non-qualified names of allowed attributes (cannot be
      * null, but can be empty.)
      *
-     * @throws ModelException If the element contains an attribute in the
-     * namespace than this element, or in no namespace and the name of which is
-     * not in {@code names}.
+     * @param forbidden_ns The forbidden namespaces, no attribute can be in any
+     * of those namespaces.
+     *
+     * @throws ModelException If the element contains an attribute in any of the
+     * forbidden namespaces, or in no namespace and the name of which is not in
+     * {@code names}.
      */
-    public void noOtherNCNameAttribute(String[] names)
+    public void noOtherNCNameAttribute(String[] names, String[] forbidden_ns)
             throws ModelException;
 
     /**
