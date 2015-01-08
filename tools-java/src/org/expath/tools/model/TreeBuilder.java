@@ -9,6 +9,8 @@
 
 package org.expath.tools.model;
 
+import org.expath.tools.ToolsException;
+
 /**
  * A generic interface to build a tree, independent on any processor.
  *

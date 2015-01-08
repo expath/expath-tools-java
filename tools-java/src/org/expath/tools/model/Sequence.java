@@ -9,6 +9,7 @@
 
 package org.expath.tools.model;
 
+import org.expath.tools.ToolsException;
 import java.io.OutputStream;
 import java.util.Properties;
 

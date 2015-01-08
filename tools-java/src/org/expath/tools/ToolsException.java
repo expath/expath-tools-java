@@ -7,7 +7,7 @@
 /* ------------------------------------------------------------------------ */
 
 
-package org.expath.tools.model;
+package org.expath.tools;
 
 /**
  * Generic exception for the EXPath HTTP Client implementation in Java.

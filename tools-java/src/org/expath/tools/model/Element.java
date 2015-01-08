@@ -9,6 +9,8 @@
 
 package org.expath.tools.model;
 
+import org.expath.tools.ToolsException;
+
 /**
  * An abstract representation of an element (just provide the HTTP Client needs).
  *
