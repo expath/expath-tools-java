@@ -7,7 +7,7 @@
 /* ------------------------------------------------------------------------ */
 
 
-package org.expath.model;
+package org.expath.tools.model;
 
 /**
  * A generic interface to build a tree, independent on any processor.
@@ -22,10 +22,10 @@ public interface TreeBuilder
      * 
      * @param localname The local name of the element to open.
      * 
-     * @throws ModelException If there is any error opening the element.
+     * @throws ToolsException If there is any error opening the element.
      */
     public void startElem(String localname)
-            throws ModelException;
+            throws ToolsException;
 
     /**
      * Create an attribute in no namespace.
@@ -34,10 +34,10 @@ public interface TreeBuilder
      * 
      * @param value The string value of the attribute to create.
      * 
-     * @throws ModelException If there is any error creating the attribute.
+     * @throws ToolsException If there is any error creating the attribute.
      */
     public void attribute(String localname, CharSequence value)
-            throws ModelException;
+            throws ToolsException;
 
     /**
      * Allow putting content in an open element.
@@ -49,18 +49,18 @@ public interface TreeBuilder
      * add as many attribute as you want, then you have to "close the opening
      * tag" before adding any content to the element.
      * 
-     * @throws ModelException If there is any error starting content.
+     * @throws ToolsException If there is any error starting content.
      */
     public void startContent()
-            throws ModelException;
+            throws ToolsException;
 
     /**
      * Close the current element.
      * 
-     * @throws ModelException If there is any error closing the current element.
+     * @throws ToolsException If there is any error closing the current element.
      */
     public void endElem()
-            throws ModelException;
+            throws ToolsException;
 }
 
 

@@ -1,7 +1,7 @@
-/build/expath-model-java-0.*.zip
-/build/expath-model-java.jar
-/model-java/nbproject/private/
-/model-java/nbproject/genfiles.properties
-/model-java/dist/
-/model-java/build/
-/model-java/src/org/expath/model/version.properties
+/build/expath-tools-java-0.*.zip
+/build/expath-tools-java.jar
+/tools-java/nbproject/private/
+/tools-java/nbproject/genfiles.properties
+/tools-java/dist/
+/tools-java/build/
+/tools-java/src/org/expath/tools/version.properties

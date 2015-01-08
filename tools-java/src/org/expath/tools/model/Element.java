@@ -7,7 +7,7 @@
 /* ------------------------------------------------------------------------ */
 
 
-package org.expath.model;
+package org.expath.tools.model;
 
 /**
  * An abstract representation of an element (just provide the HTTP Client needs).
@@ -98,12 +98,12 @@ public interface Element
      * @param forbidden_ns The forbidden namespaces, no attribute can be in any
      * of those namespaces.
      *
-     * @throws ModelException If the element contains an attribute in any of the
+     * @throws ToolsException If the element contains an attribute in any of the
      * forbidden namespaces, or in no namespace and the name of which is not in
      * {@code names}.
      */
     public void noOtherNCNameAttribute(String[] names, String[] forbidden_ns)
-            throws ModelException;
+            throws ToolsException;
 
     /**
      * Return the content of the element (the content of the child:: axis).

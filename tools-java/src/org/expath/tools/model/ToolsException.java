@@ -1,66 +1,32 @@
 /****************************************************************************/
-/*  File:       Attribute.java                                              */
+/*  File:       ToolsException.java                                         */
 /*  Author:     F. Georges - H2O Consulting                                 */
-/*  Date:       2011-03-10                                                  */
+/*  Date:       2015-01-06                                                  */
 /*  Tags:                                                                   */
-/*      Copyright (c) 2011 Florent Georges (see end of file.)               */
+/*      Copyright (c) 2015 Florent Georges (see end of file.)               */
 /* ------------------------------------------------------------------------ */
 
 
-package org.expath.model;
+package org.expath.tools.model;
 
 /**
- * An abstract representation of an attribute.
+ * Generic exception for the EXPath HTTP Client implementation in Java.
  *
  * @author Florent Georges
- * @date   2011-03-10
+ * @date   2015-01-06
  */
-public interface Attribute
+public class ToolsException
+        extends Exception
 {
-    /**
-     * Return the local part of the name of the attribute.
-     * 
-     * @return The local part of the name of the element, cannot be {@code null}
-     * nor empty.
-     */
-    public String getLocalName();
+    public ToolsException(String msg)
+    {
+        super(msg);
+    }
 
-    /**
-     * Return the namespace URI part of the name of the attribute.
-     *
-     * @return The empty string if the name is in no namespace (never return
-     * {@code null}).
-     */
-    public String getNamespaceUri();
-
-    /**
-     * Return the string value of the attribute.
-     * 
-     * @return The value of the attribute, as a string.
-     */
-    public String getValue();
-
-    /**
-     * Return the boolean value of the attribute.
-     * 
-     * @return The value of the attribute, as a boolean.
-     * 
-     * @throws ModelException If there is any error parsing the value as a
-     * boolean.
-     */
-    public boolean getBoolean()
-            throws ModelException;
-
-    /**
-     * Return the integer value of the attribute.
-     * 
-     * @return The value of the attribute, as an integer.
-     * 
-     * @throws ModelException If there is any error parsing the value as an
-     * integer.
-     */
-    public int getInteger()
-            throws ModelException;
+    public ToolsException(String msg, Throwable cause)
+    {
+        super(msg, cause);
+    }
 }
 
 

@@ -1,17 +1,17 @@
 ver  := 0.1.0dev
-mod  := expath-model-java
+mod  := expath-tools-java
 root := $(mod)-$(ver)
-prj  := ../model-java
-jar  := $(prj)/dist/model-java.jar
+prj  := ../tools-java
+jar  := $(prj)/dist/tools-java.jar
 
-prop=$(prj)/src/org/expath/model/version.properties
+prop=$(prj)/src/org/expath/tools/version.properties
 rev=$(shell git describe --always)
 
 all: clean dist
 
 dist:
-	echo "org.expath.model.version=$(ver)"  >  $(prop)
-	echo "org.expath.model.revision=$(rev)" >> $(prop)
+	echo "org.expath.tools.version=$(ver)"  >  $(prop)
+	echo "org.expath.tools.revision=$(rev)" >> $(prop)
 	( cd "$(prj)" && ant )
 	mkdir "$(root)"
 	echo "Version: $(ver)" > "$(root)/VERSION"
@@ -31,6 +31,6 @@ clean:
 	rm -f  "$(root).zip"
 
 check-version:
-	java -cp "$(mod).jar" org.expath.model.Version
+	java -cp "$(mod).jar" org.expath.tools.Version
 
 .PHONY: dist clean

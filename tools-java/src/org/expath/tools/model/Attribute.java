@@ -1,67 +1,66 @@
 /****************************************************************************/
-/*  File:       Sequence.java                                               */
+/*  File:       Attribute.java                                              */
 /*  Author:     F. Georges - H2O Consulting                                 */
-/*  Date:       2011-03-09                                                  */
+/*  Date:       2011-03-10                                                  */
 /*  Tags:                                                                   */
 /*      Copyright (c) 2011 Florent Georges (see end of file.)               */
 /* ------------------------------------------------------------------------ */
 
 
-package org.expath.model;
-
-import java.io.OutputStream;
-import java.util.Properties;
+package org.expath.tools.model;
 
 /**
- * An abstract representation of a sequence (just provide basic needs).
+ * An abstract representation of an attribute.
  *
  * @author Florent Georges
- * @date   2011-03-09
+ * @date   2011-03-10
  */
-public interface Sequence
+public interface Attribute
 {
     /**
-     * Return true if the sequence is empty.
+     * Return the local part of the name of the attribute.
      * 
-     * @return {@code true} if this sequence is empty.
-     * 
-     * @throws ModelException If there is any technical error computing the
-     * result.
+     * @return The local part of the name of the element, cannot be {@code null}
+     * nor empty.
      */
-    public boolean isEmpty()
-            throws ModelException;
+    public String getLocalName();
 
     /**
-     * Return the next item in the sequence, as a sequence itself (a singleton).
+     * Return the namespace URI part of the name of the attribute.
      *
-     * Each call to this method increment the current position, so the first
-     * call returns the first item in the sequence, then the second call returns
-     * the second item, etc.  Return null if there is no more item to consume in
-     * the sequence.
-     * 
-     * @return The next item in the sequence (as a singleton sequence).
-     * 
-     * @throws ModelException If there is any technical error accessing or
-     * building the result.
+     * @return The empty string if the name is in no namespace (never return
+     * {@code null}).
      */
-    public Sequence next()
-            throws ModelException;
+    public String getNamespaceUri();
 
     /**
-     * Serialize the sequence to the output stream, using the serialization parameters.
-     *
-     * See JAXP's OutputKeys for the serialization parameters, as well as the
-     * recommendation "XSLT and XQuery Serialization".
+     * Return the string value of the attribute.
      * 
-     * @param out The destination of the output.
-     * 
-     * @param params The serialization parameters to use.
-     * 
-     * @throws ModelException If there is any error serializing the sequence or
-     * writing to {@code out}.
+     * @return The value of the attribute, as a string.
      */
-    public void serialize(OutputStream out, Properties params)
-            throws ModelException;
+    public String getValue();
+
+    /**
+     * Return the boolean value of the attribute.
+     * 
+     * @return The value of the attribute, as a boolean.
+     * 
+     * @throws ToolsException If there is any error parsing the value as a
+     * boolean.
+     */
+    public boolean getBoolean()
+            throws ToolsException;
+
+    /**
+     * Return the integer value of the attribute.
+     * 
+     * @return The value of the attribute, as an integer.
+     * 
+     * @throws ToolsException If there is any error parsing the value as an
+     * integer.
+     */
+    public int getInteger()
+            throws ToolsException;
 }
 
 
