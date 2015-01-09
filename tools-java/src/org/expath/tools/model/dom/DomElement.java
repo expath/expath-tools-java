@@ -159,8 +159,33 @@ public class DomElement
 
     @Override
     public QName parseQName(String value)
+            throws ToolsException
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int colon = value.indexOf(':');
+        // ':' not found
+        if ( colon < 0 ) {
+            String ns = myElem.lookupNamespaceURI(null);
+            // no default namespace
+            if ( ns == null ) {
+                return new QName(value);
+            }
+            else {
+                return new QName(ns, value);
+            }
+        }
+        // ':' found
+        else {
+            String prefix = value.substring(0, colon);
+            String ns = myElem.lookupNamespaceURI(prefix);
+            // no namespace for prefix
+            if ( ns == null ) {
+                throw new ToolsException("No namespace in scope for prefix of QName: " + value);
+            }
+            else {
+                String local = value.substring(colon + 1);
+                return new QName(ns, local);
+            }
+        }
     }
 
     private final org.w3c.dom.Element myElem;
