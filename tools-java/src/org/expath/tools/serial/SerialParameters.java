@@ -78,7 +78,10 @@ public class SerialParameters
                         params.setMediaType(value);
                         break;
                     case METHOD_NAME :
-                        QName qname = child.parseQName(value);
+                        // default namespace must not be used for method
+                        QName qname = value.indexOf(':') < 0
+                                ? new QName(value)
+                                : child.parseQName(value);
                         params.setMethod(qname);
                         break;
                     case NORMALIZATION_FORM_NAME :
