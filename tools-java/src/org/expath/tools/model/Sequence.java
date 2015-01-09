@@ -11,7 +11,7 @@ package org.expath.tools.model;
 
 import org.expath.tools.ToolsException;
 import java.io.OutputStream;
-import java.util.Properties;
+import org.expath.tools.serial.SerialParameters;
 
 /**
  * An abstract representation of a sequence (just provide basic needs).
@@ -61,7 +61,7 @@ public interface Sequence
      * @throws ToolsException If there is any error serializing the sequence or
      * writing to {@code out}.
      */
-    public void serialize(OutputStream out, Properties params)
+    public void serialize(OutputStream out, SerialParameters params)
             throws ToolsException;
 }
 
