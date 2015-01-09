@@ -9,6 +9,7 @@
 
 package org.expath.tools.model.dom;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.expath.tools.ToolsException;
 import org.expath.tools.model.Attribute;
 import org.expath.tools.model.Element;
@@ -26,6 +28,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * Trivial, in-memory implementation, for test purposes.
@@ -37,20 +40,28 @@ public class DomElement
         implements Element
 {
     public static Element parseString(String xml)
-            throws Exception
+            throws ToolsException
     {
-        // the input source
-        Reader reader = new StringReader(xml);
-        InputSource source = new InputSource(reader);
-        // the DOM builder
-	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-	DocumentBuilder builder = factory.newDocumentBuilder();
-        // parse
-	Document doc = builder.parse(source);
-        // the root element
-        org.w3c.dom.Element root = doc.getDocumentElement();
-        return new DomElement(root);
+        try {
+            // the input source
+            Reader reader = new StringReader(xml);
+            InputSource source = new InputSource(reader);
+            // the DOM builder
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            // parse
+            Document doc = builder.parse(source);
+            // the root element
+            org.w3c.dom.Element root = doc.getDocumentElement();
+            return new DomElement(root);
+        }
+        catch ( ParserConfigurationException ex ) {
+            throw new ToolsException("Error instantiating the DOM parser", ex);
+        }
+        catch ( SAXException | IOException ex ) {
+            throw new ToolsException("Error parsing the XML string", ex);
+        }
     }
 
     public DomElement(org.w3c.dom.Element elem)
