@@ -9,6 +9,7 @@
 
 package org.expath.tools.model;
 
+import javax.xml.namespace.QName;
 import org.expath.tools.ToolsException;
 
 /**
@@ -113,6 +114,16 @@ public interface Element
      * @return The sequence.
      */
     public Sequence getContent();
+
+    /**
+     * Parse a literal QName using the namespace bindings in scope on the element.
+     * 
+     * @param value The literal QName to parse.
+     * 
+     * @return The parsed QName.
+     */
+    public QName parseQName(String value)
+            throws ToolsException;
 }
 
 
