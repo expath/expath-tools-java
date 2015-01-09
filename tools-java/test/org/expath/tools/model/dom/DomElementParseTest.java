@@ -9,21 +9,15 @@
 
 package org.expath.tools.model.dom;
 
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.Iterator;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.expath.tools.model.Attribute;
 import org.expath.tools.model.Element;
 import org.expath.tools.model.Sequence;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-import org.xml.sax.InputSource;
 
 /**
  * Test parsing into a {@link DomElement}.
@@ -33,29 +27,12 @@ import org.xml.sax.InputSource;
  */
 public class DomElementParseTest
 {
-    private Element parseString(String xml)
-            throws Exception
-    {
-        // the input source
-        Reader reader = new StringReader(xml);
-        InputSource source = new InputSource(reader);
-        // the DOM builder
-	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-	DocumentBuilder builder = factory.newDocumentBuilder();
-        // parse
-	Document doc = builder.parse(source);
-        // the root element
-        org.w3c.dom.Element root = doc.getDocumentElement();
-        return new DomElement(root);
-    }
-
     @Test
     public void parseString()
             throws Exception
     {
         String xml = "<root><hello type='global'>World!</hello></root>";
-        Element elem = parseString(xml);
+        Element elem = DomElement.parseString(xml);
         // /root name
         assertEquals(elem.getLocalName(), "root", "the root element name");
         assertEquals(elem.getNamespaceUri(), "", "the root element namespace");

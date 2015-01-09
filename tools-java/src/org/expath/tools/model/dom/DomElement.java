@@ -9,17 +9,23 @@
 
 package org.expath.tools.model.dom;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.expath.tools.ToolsException;
 import org.expath.tools.model.Attribute;
 import org.expath.tools.model.Element;
 import org.expath.tools.model.Sequence;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 /**
  * Trivial, in-memory implementation, for test purposes.
@@ -30,6 +36,23 @@ import org.w3c.dom.NodeList;
 public class DomElement
         implements Element
 {
+    public static Element parseString(String xml)
+            throws Exception
+    {
+        // the input source
+        Reader reader = new StringReader(xml);
+        InputSource source = new InputSource(reader);
+        // the DOM builder
+	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+	DocumentBuilder builder = factory.newDocumentBuilder();
+        // parse
+	Document doc = builder.parse(source);
+        // the root element
+        org.w3c.dom.Element root = doc.getDocumentElement();
+        return new DomElement(root);
+    }
+
     public DomElement(org.w3c.dom.Element elem)
     {
         myElem = elem;
