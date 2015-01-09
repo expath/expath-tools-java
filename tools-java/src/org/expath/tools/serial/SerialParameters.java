@@ -10,8 +10,12 @@
 
 package org.expath.tools.serial;
 
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 import javax.xml.namespace.QName;
 import org.expath.tools.ToolsException;
+import org.expath.tools.model.Element;
 
 /**
  * A set of serialization parameters.
@@ -21,10 +25,99 @@ import org.expath.tools.ToolsException;
  */
 public class SerialParameters
 {
+    public static SerialParameters parse(Element elem)
+            throws ToolsException
+    {
+        if ( null == elem ) {
+            throw new NullPointerException("Element for serialization parameters is null");
+        }
+        String ns = elem.getNamespaceUri();
+        String name = elem.getLocalName();
+        if ( ! SERIAL_NS_URI.equals(ns) || ! SERIAL_PARAMS_NAME.equals(name) ) {
+            throw new ToolsException("Element name incorrect: {" + ns + "}" + name);
+        }
+        SerialParameters params = new SerialParameters();
+        for ( Element child : elem.children() ) {
+            String child_ns = child.getNamespaceUri();
+            String child_name = child.getLocalName();
+            String value = child.getAttribute(SERIAL_VALUE_NAME);
+            if ( SERIAL_NS_URI.equals(child_ns) ) {
+                switch ( child_name )
+                {
+                    case BYTE_ORDER_MARK_NAME :
+                        params.setByteOrderMark(value);
+                        break;
+                    case CDATA_SECTION_ELEMENTS_NAME :
+                        params.setCdataSectionElements(value, child);
+                        break;
+                    case DOCTYPE_PUBLIC_NAME :
+                        params.setDoctypePublic(value);
+                        break;
+                    case DOCTYPE_SYSTEM_NAME :
+                        params.setDoctypeSystem(value);
+                        break;
+                    case ENCODING_NAME :
+                        params.setEncoding(value);
+                        break;
+                    case ESCAPE_URI_ATTRIBUTES_NAME :
+                        params.setEscapeUriAttributes(value);
+                        break;
+                    case HTML_VERSION_NAME :
+                        params.setHtmlVersion(value);
+                        break;
+                    case INCLUDE_CONTENT_TYPE_NAME :
+                        params.setIncludeContentType(value);
+                        break;
+                    case INDENT_NAME :
+                        params.setIndent(value);
+                        break;
+                    case ITEM_SEPARATOR_NAME :
+                        params.setItemSeparator(value);
+                        break;
+                    case MEDIA_TYPE_NAME :
+                        params.setMediaType(value);
+                        break;
+                    case METHOD_NAME :
+                        QName qname = child.parseQName(value);
+                        params.setMethod(qname);
+                        break;
+                    case NORMALIZATION_FORM_NAME :
+                        params.setNormalizationForm(value);
+                        break;
+                    case OMIT_XML_DECLARATION_NAME :
+                        params.setOmitXmlDeclaration(value);
+                        break;
+                    case STANDALONE_NAME :
+                        params.setStandalone(value);
+                        break;
+                    case SUPPRESS_INDENTATION_NAME :
+                        params.setSuppressIndentation(value, child);
+                        break;
+                    case UNDECLARE_PREFIXES_NAME :
+                        params.setUndeclarePrefixes(value);
+                        break;
+                    case USE_CHARACTER_MAPS_NAME :
+                        params.setUseCharacterMaps(value, child);
+                        break;
+                    case VERSION_NAME :
+                        params.setVersion(value);
+                        break;
+                    default :
+                        throw new ToolsException("Unknown serialization param: {" + child_ns + "}" + child_name);
+                }
+            }
+            else {
+                QName qn = new QName(child_ns, child_name);
+                params.setExtension(qn, value);
+            }
+        }
+        return params;
+    }
+
     /**
      * Set an extension handler.
      */
-    public void setExtension(ExtensionHandler handler)
+    public void setExtensionHandler(ExtensionHandler handler)
             throws ToolsException {
         myHandler = handler;
     }
@@ -60,29 +153,46 @@ public class SerialParameters
     /**
      * Get the output property {@code byte-order-mark}.
      */
-    public String getByteOrderMark() {
+    public Boolean getByteOrderMark() {
         return myByteOrderMark;
     }
 
     /**
      * Set the output property {@code byte-order-mark}.
      */
-    public void setByteOrderMark(String v) {
+    public void setByteOrderMark(Boolean v) {
         myByteOrderMark = v;
+    }
+
+    /**
+     * Set the output property {@code byte-order-mark}.
+     */
+    public void setByteOrderMark(String v) throws ToolsException {
+        setByteOrderMark(parseBoolean(v));
     }
 
     /**
      * Get the output property {@code cdata-section-elements}.
      */
-    public String getCdataSectionElements() {
+    public Iterable<QName> getCdataSectionElements() {
         return myCdataSectionElements;
     }
 
     /**
      * Set the output property {@code cdata-section-elements}.
      */
-    public void setCdataSectionElements(String v) {
-        myCdataSectionElements = v;
+    public void setCdataSectionElements(Iterable<QName> v) {
+        myCdataSectionElements = new HashSet<>();
+        for ( QName q : v ) {
+            myCdataSectionElements.add(q);
+        }
+    }
+
+    /**
+     * Set the output property {@code cdata-section-elements}.
+     */
+    public void setCdataSectionElements(String v, Element scope) throws ToolsException {
+        myCdataSectionElements = parseQNames(v, scope);
     }
 
     /**
@@ -130,43 +240,99 @@ public class SerialParameters
     /**
      * Get the output property {@code escape-uri-attributes}.
      */
-    public String getEscapeUriAttributes() {
+    public Boolean getEscapeUriAttributes() {
         return myEscapeUriAttributes;
     }
 
     /**
      * Set the output property {@code escape-uri-attributes}.
      */
-    public void setEscapeUriAttributes(String v) {
+    public void setEscapeUriAttributes(Boolean v) {
         myEscapeUriAttributes = v;
+    }
+
+    /**
+     * Set the output property {@code escape-uri-attributes}.
+     */
+    public void setEscapeUriAttributes(String v) throws ToolsException {
+        setEscapeUriAttributes(parseBoolean(v));
+    }
+
+    /**
+     * Get the output property {@code html-version}.
+     */
+    public Double getHtmlVersion() {
+        return myHtmlVersion;
+    }
+
+    /**
+     * Set the output property {@code html-version}.
+     */
+    public void setHtmlVersion(Double v) {
+        myHtmlVersion = v;
+    }
+
+    /**
+     * Set the output property {@code html-version}.
+     */
+    public void setHtmlVersion(String v) throws ToolsException {
+        setHtmlVersion(parseDecimal(v));
     }
 
     /**
      * Get the output property {@code include-content-type}.
      */
-    public String getIncludeContentType() {
+    public Boolean getIncludeContentType() {
         return myIncludeContentType;
     }
 
     /**
      * Set the output property {@code include-content-type}.
      */
-    public void setIncludeContentType(String v) {
+    public void setIncludeContentType(Boolean v) {
         myIncludeContentType = v;
+    }
+
+    /**
+     * Set the output property {@code include-content-type}.
+     */
+    public void setIncludeContentType(String v) throws ToolsException {
+        setIncludeContentType(parseBoolean(v));
     }
 
     /**
      * Get the output property {@code indent}.
      */
-    public String getIndent() {
+    public Boolean getIndent() {
         return myIndent;
     }
 
     /**
      * Set the output property {@code indent}.
      */
-    public void setIndent(String v) {
+    public void setIndent(Boolean v) {
         myIndent = v;
+    }
+
+    /**
+     * Set the output property {@code indent}.
+     */
+    public void setIndent(String v) throws ToolsException {
+        setIndent(parseBoolean(v));
+    }
+
+    /**
+     * Get the output property {@code item-separator}.
+     */
+    public String getItemSeparator() {
+        return myItemSeparator;
+    }
+
+    /**
+     * Set the output property {@code item-separator}.
+     */
+    public void setItemSeparator(String v) {
+        myItemSeparator = v;
     }
 
     /**
@@ -186,14 +352,14 @@ public class SerialParameters
     /**
      * Get the output property {@code method}.
      */
-    public String getMethod() {
+    public QName getMethod() {
         return myMethod;
     }
 
     /**
      * Set the output property {@code method}.
      */
-    public void setMethod(String v) {
+    public void setMethod(QName v) {
         myMethod = v;
     }
 
@@ -214,57 +380,112 @@ public class SerialParameters
     /**
      * Get the output property {@code omit-xml-declaration}.
      */
-    public String getOmitXmlDeclaration() {
+    public Boolean getOmitXmlDeclaration() {
         return myOmitXmlDeclaration;
     }
 
     /**
      * Set the output property {@code omit-xml-declaration}.
      */
-    public void setOmitXmlDeclaration(String v) {
+    public void setOmitXmlDeclaration(Boolean v) {
         myOmitXmlDeclaration = v;
+    }
+
+    /**
+     * Set the output property {@code omit-xml-declaration}.
+     */
+    public void setOmitXmlDeclaration(String v) throws ToolsException {
+        setOmitXmlDeclaration(parseBoolean(v));
     }
 
     /**
      * Get the output property {@code standalone}.
      */
-    public String getStandalone() {
+    public Standalone getStandalone() {
         return myStandalone;
     }
 
     /**
      * Set the output property {@code standalone}.
      */
-    public void setStandalone(String v) {
+    public void setStandalone(Standalone v) {
         myStandalone = v;
+    }
+
+    /**
+     * Set the output property {@code standalone}.
+     */
+    public void setStandalone(String v) throws ToolsException {
+        setStandalone(parseStandalone(v));
+    }
+
+    /**
+     * Get the output property {@code suppress-indentation}.
+     */
+    public Iterable<QName> getSuppressIndentation() {
+        return mySuppressIndentation;
+    }
+
+    /**
+     * Set the output property {@code suppress-indentation}.
+     */
+    public void setSuppressIndentation(Iterable<QName> v) {
+        mySuppressIndentation = new HashSet<>();
+        for ( QName q : v ) {
+            mySuppressIndentation.add(q);
+        }
+    }
+
+    /**
+     * Set the output property {@code suppress-indentation}.
+     */
+    public void setSuppressIndentation(String v, Element scope) throws ToolsException {
+        mySuppressIndentation = parseQNames(v, scope);
     }
 
     /**
      * Get the output property {@code undeclare-prefixes}.
      */
-    public String getUndeclarePrefixes() {
+    public Boolean getUndeclarePrefixes() {
         return myUndeclarePrefixes;
     }
 
     /**
      * Set the output property {@code undeclare-prefixes}.
      */
-    public void setUndeclarePrefixes(String v) {
+    public void setUndeclarePrefixes(Boolean v) {
         myUndeclarePrefixes = v;
+    }
+
+    /**
+     * Set the output property {@code undeclare-prefixes}.
+     */
+    public void setUndeclarePrefixes(String v) throws ToolsException {
+        setUndeclarePrefixes(parseBoolean(v));
     }
 
     /**
      * Get the output property {@code use-character-maps}.
      */
-    public String getUseCharacterMaps() {
+    public Iterable<UseChar> getUseCharacterMaps() {
         return myUseCharacterMaps;
     }
 
     /**
      * Set the output property {@code use-character-maps}.
      */
-    public void setUseCharacterMaps(String v) {
-        myUseCharacterMaps = v;
+    public void setUseCharacterMaps(Iterable<UseChar> v) {
+        myUseCharacterMaps = new HashSet<>();
+        for ( UseChar q : v ) {
+            myUseCharacterMaps.add(q);
+        }
+    }
+
+    /**
+     * Set the output property {@code use-character-maps}.
+     */
+    public void setUseCharacterMaps(String v, Element scope) throws ToolsException {
+        myUseCharacterMaps = parseCharMap(v, scope);
     }
 
     /**
@@ -281,24 +502,136 @@ public class SerialParameters
         myVersion = v;
     }
 
-    private String myByteOrderMark;
-    private String myCdataSectionElements;
+    public enum Standalone {
+        YES, NO, OMIT
+    }
+
+    public class UseChar {
+        public UseChar(String c, String s) {
+            character = c;
+            stringMap = s;
+        }
+        public String character;
+        public String stringMap;
+    }
+
+    private Boolean parseBoolean(String value)
+            throws ToolsException
+    {
+        if ( "yes".equals(value) ) {
+            return Boolean.TRUE;
+        }
+        else if ( "no".equals(value) ) {
+            return Boolean.FALSE;
+        }
+        else {
+            throw new ToolsException("Invalid yes/no value: " + value);
+        }
+    }
+
+    private Standalone parseStandalone(String value)
+            throws ToolsException
+    {
+        if ( "yes".equals(value) ) {
+            return Standalone.YES;
+        }
+        else if ( "no".equals(value) ) {
+            return Standalone.NO;
+        }
+        else if ( "omit".equals(value) ) {
+            return Standalone.OMIT;
+        }
+        else {
+            throw new ToolsException("Invalid standalone (yes/no/omit) value: " + value);
+        }
+    }
+
+    private Double parseDecimal(String value)
+            throws ToolsException
+    {
+        try {
+            return Double.valueOf(value);
+        }
+        catch ( NumberFormatException ex ) {
+            throw new ToolsException("Error parsing a decimal serialization parameter: " + value, ex);
+        }
+    }
+
+    private Set<QName> parseQNames(String value, Element scope)
+            throws ToolsException
+    {
+        Set<QName> qnames = new HashSet<>();
+        for ( String v : value.split("\\s+") ) {
+            qnames.add(scope.parseQName(v));
+        }
+        return qnames;
+    }
+
+    private Set<UseChar> parseCharMap(String value, Element scope)
+            throws ToolsException
+    {
+        Set<UseChar> result = new HashSet<>();
+        for ( Element elem : scope.children() ) {
+            String ns = elem.getNamespaceUri();
+            String name = elem.getLocalName();
+            if ( ! SERIAL_NS_URI.equals(ns) || ! CHAR_MAP_NAME.equals(name) ) {
+                throw new ToolsException("Element name incorrect: {" + ns + "}" + name);
+            }
+            String ch  = elem.getAttribute(CHAR_ATTR_NAME);
+            String str = elem.getAttribute(MAP_STRING_ATTR_NAME);
+            UseChar us = new UseChar(ch, str);
+            result.add(us);
+        }
+        return result;
+    }
+
+    private Boolean myByteOrderMark;
+    private Set<QName> myCdataSectionElements;
     private String myDoctypePublic;
     private String myDoctypeSystem;
     private String myEncoding;
-    private String myEscapeUriAttributes;
-    private String myIncludeContentType;
-    private String myIndent;
+    private Boolean myEscapeUriAttributes;
+    private Double myHtmlVersion;
+    private Boolean myIncludeContentType;
+    private Boolean myIndent;
+    private String myItemSeparator;
     private String myMediaType;
-    private String myMethod;
+    private QName myMethod;
     private String myNormalizationForm;
-    private String myOmitXmlDeclaration;
-    private String myStandalone;
-    private String myUndeclarePrefixes;
-    private String myUseCharacterMaps;
+    private Boolean myOmitXmlDeclaration;
+    private Standalone myStandalone;
+    private Set<QName> mySuppressIndentation;
+    private Boolean myUndeclarePrefixes;
+    private Set<UseChar> myUseCharacterMaps;
     private String myVersion;
 
     private ExtensionHandler myHandler;
+
+    private static final String SERIAL_NS_URI = "http://www.w3.org/2010/xslt-xquery-serialization";
+    private static final String SERIAL_PARAMS_NAME = "serialization-parameters";
+    private static final String CHAR_MAP_NAME = "character-map";
+    private static final String CHAR_ATTR_NAME = "character";
+    private static final String MAP_STRING_ATTR_NAME = "map-string";
+    private static final String SERIAL_VALUE_NAME = "value";
+    private static final String BYTE_ORDER_MARK_NAME = "byte-order-mark";
+    private static final String CDATA_SECTION_ELEMENTS_NAME = "cdata-section-elements";
+    private static final String DOCTYPE_PUBLIC_NAME = "doctype-public";
+    private static final String DOCTYPE_SYSTEM_NAME = "doctype-system";
+    private static final String ENCODING_NAME = "encoding";
+    private static final String ESCAPE_URI_ATTRIBUTES_NAME = "escape-uri-attributes";
+    private static final String HTML_VERSION_NAME = "html-version";
+    private static final String INCLUDE_CONTENT_TYPE_NAME = "include-content-type";
+    private static final String INDENT_NAME = "indent";
+    private static final String ITEM_SEPARATOR_NAME = "item-separator";
+    private static final String MEDIA_TYPE_NAME = "media-type";
+    private static final String METHOD_NAME = "method";
+    private static final String NORMALIZATION_FORM_NAME = "normalization-form";
+    private static final String OMIT_XML_DECLARATION_NAME = "omit-xml-declaration";
+    private static final String STANDALONE_NAME = "standalone";
+    private static final String SUPPRESS_INDENTATION_NAME = "suppress-indentation";
+    private static final String UNDECLARE_PREFIXES_NAME = "undeclare-prefixes";
+    private static final String USE_CHARACTER_MAPS_NAME = "use-character-maps";
+    private static final String VERSION_NAME = "version";
 }
 
 
