@@ -13,8 +13,12 @@ import java.io.OutputStream;
 import org.expath.tools.ToolsException;
 import org.expath.tools.model.Sequence;
 import org.expath.tools.serial.SerialParameters;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSOutput;
+import org.w3c.dom.ls.LSSerializer;
 
 /**
  * Trivial, in-memory implementation, for test purposes.
@@ -48,7 +52,18 @@ public class DomSequence
     public void serialize(OutputStream out, SerialParameters params)
             throws ToolsException
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int length = myNodes.getLength();
+        if ( length == 0 ) {
+            return;
+        }
+        Document doc = myNodes.item(0).getOwnerDocument();
+        DOMImplementationLS impl = (DOMImplementationLS) doc.getImplementation();
+        LSSerializer serial = impl.createLSSerializer();
+        LSOutput lsout = impl.createLSOutput();
+        lsout.setByteStream(out);
+        for ( int i = 0; i < myNodes.getLength(); ++i ) {
+            serial.write(myNodes.item(i), lsout);
+        }
     }
 
     NodeList getUnderlyingNodeList()
