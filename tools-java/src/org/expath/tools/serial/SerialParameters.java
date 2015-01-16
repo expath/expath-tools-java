@@ -11,7 +11,6 @@
 package org.expath.tools.serial;
 
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 import javax.xml.namespace.QName;
 import org.expath.tools.ToolsException;
@@ -41,6 +40,9 @@ public class SerialParameters
             String child_ns = child.getNamespaceUri();
             String child_name = child.getLocalName();
             String value = child.getAttribute(SERIAL_VALUE_NAME);
+            if ( null == value ) {
+                throw new ToolsException("No @" + SERIAL_VALUE_NAME + " on the element: {" + ns + "}" + name);
+            }
             if ( SERIAL_NS_URI.equals(child_ns) ) {
                 switch ( child_name )
                 {
@@ -134,7 +136,7 @@ public class SerialParameters
     public String getExtension(QName n)
             throws ToolsException {
         if ( myHandler == null ) {
-            throw new ToolsException("No handler set for extension serialization parameters");
+            return null;
         }
         return myHandler.getExtension(n);
     }
