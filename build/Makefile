@@ -15,7 +15,7 @@ dist:
 	( cd "$(prj)" && ant )
 	mkdir "$(root)"
 	echo "Version: $(ver)" > "$(root)/VERSION"
-	echo "Git revision:" `git describe --always` >> "$(root)/VERSION"
+	echo "Git revision: $(rev)" >> "$(root)/VERSION"
 	cp "$(jar)" "$(mod).jar"
 	cp "$(jar)" "$(root)/$(mod).jar"
 	cp README "$(root)/README"
