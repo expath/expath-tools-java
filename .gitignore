@@ -1,7 +1,3 @@
-/build/expath-tools-java-0.*.zip
-/build/expath-tools-java.jar
-/tools-java/nbproject/private/
-/tools-java/nbproject/genfiles.properties
-/tools-java/dist/
-/tools-java/build/
-/tools-java/src/org/expath/tools/version.properties
+target/
+*.iml
+.idea/

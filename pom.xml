@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.expath</groupId>
+        <artifactId>expath-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>org.expath.tools</groupId>
+    <artifactId>tools-java</artifactId>
+    <version>0.3.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>EXPath Tools Java Library</name>
+    <description>Java Library implementing the core EXPath Tools</description>
+
+    <scm>
+        <connection>scm:git:git://github.com/expath/expath-tools-java.git</connection>
+        <developerConnection>scm:git:git://github.com/expath/expath-tools-java.git</developerConnection>
+        <url>http://github.com/expath/expath-tools-java</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.9.8</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
