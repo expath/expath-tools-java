@@ -70,19 +70,28 @@ public class ParseParametersTest
         Element elem = DomElement.parseString(REC_EXAMPLE_04);
         SerialParameters params = SerialParameters.parse(elem);
         assertEquals(params.getMethod(), METHOD_JSP, "the jsp method");
-        // TODO: test the use chars map
-        params.getUseCharacterMaps();
         Iterable<UseChar> elems = params.getUseCharacterMaps();
         Iterator<UseChar> it = elems.iterator();
         assertTrue(it.hasNext(), "the use char map must not be empty");
         UseChar first = it.next();
+        // relative order not guaranteed
+        String exp_first_char  = "«";
+        String exp_first_map   = "<%";
+        String exp_second_char = "»";
+        String exp_second_map  = "%>";
+        if ( "»".equals(first.character) ) {
+            exp_first_char  = "»";
+            exp_first_map   = "%>";
+            exp_second_char = "«";
+            exp_second_map  = "<%";
+        }
         assertTrue(it.hasNext(), "the use char map must have a second item");
-        assertEquals(first.character, "«", "the first use char map, character");
-        assertEquals(first.stringMap, "<%", "the first use char map, string");
+        assertEquals(first.character, exp_first_char, "the first use char map, character");
+        assertEquals(first.stringMap, exp_first_map, "the first use char map, string");
         UseChar second = it.next();
         assertFalse(it.hasNext(), "the use char map must not have more than 2 items");
-        assertEquals(second.character, "»", "the first use char map, character");
-        assertEquals(second.stringMap, "%>", "the first use char map, string");
+        assertEquals(second.character, exp_second_char, "the first use char map, character");
+        assertEquals(second.stringMap, exp_second_map, "the first use char map, string");
     }
 
     private static final QName METHOD_XML     = new QName("xml");

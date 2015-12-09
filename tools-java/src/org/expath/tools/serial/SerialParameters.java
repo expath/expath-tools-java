@@ -50,7 +50,7 @@ public class SerialParameters
                         params.setByteOrderMark(value);
                         break;
                     case CDATA_SECTION_ELEMENTS_NAME :
-                        params.setCdataSectionElements(value, child);
+                        params.addCdataSectionElements(value, child);
                         break;
                     case DOCTYPE_PUBLIC_NAME :
                         params.setDoctypePublic(value);
@@ -96,13 +96,13 @@ public class SerialParameters
                         params.setStandalone(value);
                         break;
                     case SUPPRESS_INDENTATION_NAME :
-                        params.setSuppressIndentation(value, child);
+                        params.addSuppressIndentation(value, child);
                         break;
                     case UNDECLARE_PREFIXES_NAME :
                         params.setUndeclarePrefixes(value);
                         break;
                     case USE_CHARACTER_MAPS_NAME :
-                        params.setUseCharacterMaps(value, child);
+                        params.addUseCharacterMaps(value, child);
                         break;
                     case VERSION_NAME :
                         params.setVersion(value);
@@ -186,8 +186,7 @@ public class SerialParameters
     /**
      * Set the output property {@code cdata-section-elements}.
      */
-    public void setCdataSectionElements(Iterable<QName> v) {
-        myCdataSectionElements = new HashSet<>();
+    public void addCdataSectionElements(Iterable<QName> v) {
         for ( QName q : v ) {
             myCdataSectionElements.add(q);
         }
@@ -196,8 +195,8 @@ public class SerialParameters
     /**
      * Set the output property {@code cdata-section-elements}.
      */
-    public void setCdataSectionElements(String v, Element scope) throws ToolsException {
-        myCdataSectionElements = parseQNames(v, scope);
+    public void addCdataSectionElements(String v, Element scope) throws ToolsException {
+        addCdataSectionElements(parseQNames(v, scope));
     }
 
     /**
@@ -434,8 +433,7 @@ public class SerialParameters
     /**
      * Set the output property {@code suppress-indentation}.
      */
-    public void setSuppressIndentation(Iterable<QName> v) {
-        mySuppressIndentation = new HashSet<>();
+    public void addSuppressIndentation(Iterable<QName> v) {
         for ( QName q : v ) {
             mySuppressIndentation.add(q);
         }
@@ -444,8 +442,8 @@ public class SerialParameters
     /**
      * Set the output property {@code suppress-indentation}.
      */
-    public void setSuppressIndentation(String v, Element scope) throws ToolsException {
-        mySuppressIndentation = parseQNames(v, scope);
+    public void addSuppressIndentation(String v, Element scope) throws ToolsException {
+        addSuppressIndentation(parseQNames(v, scope));
     }
 
     /**
@@ -479,8 +477,7 @@ public class SerialParameters
     /**
      * Set the output property {@code use-character-maps}.
      */
-    public void setUseCharacterMaps(Iterable<UseChar> v) {
-        myUseCharacterMaps = new HashSet<>();
+    public void addUseCharacterMaps(Iterable<UseChar> v) {
         for ( UseChar q : v ) {
             myUseCharacterMaps.add(q);
         }
@@ -489,8 +486,8 @@ public class SerialParameters
     /**
      * Set the output property {@code use-character-maps}.
      */
-    public void setUseCharacterMaps(String v, Element scope) throws ToolsException {
-        myUseCharacterMaps = parseCharMap(v, scope);
+    public void addUseCharacterMaps(String v, Element scope) throws ToolsException {
+        addUseCharacterMaps(parseCharMap(v, scope));
     }
 
     /**
@@ -591,7 +588,7 @@ public class SerialParameters
     }
 
     private Boolean myByteOrderMark;
-    private Set<QName> myCdataSectionElements;
+    private final Set<QName> myCdataSectionElements = new HashSet<>();
     private String myDoctypePublic;
     private String myDoctypeSystem;
     private String myEncoding;
@@ -605,9 +602,9 @@ public class SerialParameters
     private String myNormalizationForm;
     private Boolean myOmitXmlDeclaration;
     private Standalone myStandalone;
-    private Set<QName> mySuppressIndentation;
+    private final Set<QName> mySuppressIndentation = new HashSet<>();
     private Boolean myUndeclarePrefixes;
-    private Set<UseChar> myUseCharacterMaps;
+    private final Set<UseChar> myUseCharacterMaps = new HashSet<>();
     private String myVersion;
 
     private ExtensionHandler myHandler;
