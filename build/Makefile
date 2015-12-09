@@ -1,4 +1,4 @@
-ver  := 0.1.0dev
+ver  := 0.1.0
 mod  := expath-tools-java
 root := $(mod)-$(ver)
 prj  := ../tools-java
