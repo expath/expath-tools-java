@@ -9,7 +9,9 @@
 
 package org.expath.tools.serial;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import javax.xml.namespace.QName;
 import org.expath.tools.model.Element;
 import org.expath.tools.model.dom.DomElement;
@@ -21,7 +23,6 @@ import org.testng.annotations.Test;
  * Test parsing serialization parameters from an XML element.
  * 
  * @author Florent Georges
- * @date   2015-01-08
  * @see http://www.w3.org/TR/xslt-xquery-serialization-30/#serparams-in-xdm-instance
  */
 public class ParseParametersTest
@@ -41,17 +42,24 @@ public class ParseParametersTest
     public void recExample_02()
             throws Exception
     {
+        // the expected values
+        Set<QName> expected = new HashSet<QName>();
+        expected.add(CDATA_HEADING);
+        expected.add(CDATA_FOOTNOTE);
+        // run it
         Element elem = DomElement.parseString(REC_EXAMPLE_02);
         SerialParameters params = SerialParameters.parse(elem);
         Iterable<QName> elems = params.getCdataSectionElements();
+        // iterate over the result
+        Set<QName> actual = new HashSet<QName>();
         Iterator<QName> it = elems.iterator();
         assertTrue(it.hasNext(), "the list must not be empty");
-        QName first = it.next();
+        actual.add(it.next());
         assertTrue(it.hasNext(), "the list must have a second item");
-        assertEquals(first, CDATA_HEADING, "the heading cdata element");
-        QName second = it.next();
+        actual.add(it.next());
         assertFalse(it.hasNext(), "the list must not have more than 2 items");
-        assertEquals(second, CDATA_FOOTNOTE, "the footnote cdata element");
+        // compare sets
+        assertSet(actual, expected, "cdata element must have 2 items");
     }
 
     @Test
@@ -92,6 +100,13 @@ public class ParseParametersTest
         assertFalse(it.hasNext(), "the use char map must not have more than 2 items");
         assertEquals(second.character, exp_second_char, "the first use char map, character");
         assertEquals(second.stringMap, exp_second_map, "the first use char map, string");
+    }
+
+    private void assertSet(Set<QName> actual, Set<QName> expected, String msg)
+    {
+        assertEquals(actual.size(), expected.size(), "Both sets must be of same size - " + msg);
+        assertTrue(actual.containsAll(expected), "Actual set must contain all expected all - " + msg);
+        assertTrue(expected.containsAll(actual), "Expected set must contain all actual all - " + msg);
     }
 
     private static final QName METHOD_XML     = new QName("xml");
