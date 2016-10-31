@@ -14,13 +14,11 @@ import org.expath.tools.ToolsException;
 import org.expath.tools.model.Sequence;
 import org.expath.tools.serial.SerialParameters;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * Trivial, in-memory implementation, for test purposes.
  *
  * @author Florent Georges
- * @date   2015-01-09
  */
 public class DomSingleton
         implements Sequence

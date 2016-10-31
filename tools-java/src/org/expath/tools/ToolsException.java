@@ -13,7 +13,6 @@ package org.expath.tools;
  * Generic exception for the EXPath HTTP Client implementation in Java.
  *
  * @author Florent Georges
- * @date   2015-01-06
  */
 public class ToolsException
         extends Exception

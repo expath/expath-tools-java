@@ -17,7 +17,6 @@ import org.expath.tools.serial.SerialParameters;
  * An abstract representation of a sequence (just provide basic needs).
  *
  * @author Florent Georges
- * @date   2011-03-09
  */
 public interface Sequence
 {

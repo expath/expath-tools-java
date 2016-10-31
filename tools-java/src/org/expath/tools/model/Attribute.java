@@ -15,7 +15,6 @@ import org.expath.tools.ToolsException;
  * An abstract representation of an attribute.
  *
  * @author Florent Georges
- * @date   2011-03-10
  */
 public interface Attribute
 {

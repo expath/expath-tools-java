@@ -17,7 +17,6 @@ import org.expath.tools.ToolsException;
  * Handler for extension serialization parameters.
  * 
  * @author Florent Georges
- * @date   2015-01-08
  */
 public interface ExtensionHandler
 {

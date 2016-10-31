@@ -34,7 +34,6 @@ import org.xml.sax.SAXException;
  * Trivial, in-memory implementation, for test purposes.
  *
  * @author Florent Georges
- * @date   2015-01-08
  */
 public class DomElement
         implements Element
@@ -59,7 +58,10 @@ public class DomElement
         catch ( ParserConfigurationException ex ) {
             throw new ToolsException("Error instantiating the DOM parser", ex);
         }
-        catch ( SAXException | IOException ex ) {
+        catch ( SAXException ex ) {
+            throw new ToolsException("Error parsing the XML string", ex);
+        }
+        catch ( IOException ex ) {
             throw new ToolsException("Error parsing the XML string", ex);
         }
     }
@@ -98,7 +100,7 @@ public class DomElement
     @Override
     public Iterable<Attribute> attributes()
     {
-        List<Attribute> attrs = new ArrayList<>();
+        List<Attribute> attrs = new ArrayList<Attribute>();
         NamedNodeMap map = myElem.getAttributes();
         for ( int i = 0; i < map.getLength(); ++i ) {
             Attr a = (Attr) map.item(i);
@@ -116,7 +118,7 @@ public class DomElement
     @Override
     public Iterable<Element> children()
     {
-        List<Element> children = new ArrayList<>();
+        List<Element> children = new ArrayList<Element>();
         NodeList list = myElem.getChildNodes();
         for ( int i = 0; i < list.getLength(); ++i ) {
             Node n = list.item(i);
@@ -131,7 +133,7 @@ public class DomElement
     @Override
     public Iterable<Element> children(String ns)
     {
-        List<Element> children = new ArrayList<>();
+        List<Element> children = new ArrayList<Element>();
         NodeList list = myElem.getChildNodes();
         for ( int i = 0; i < list.getLength(); ++i ) {
             Node n = list.item(i);

@@ -16,7 +16,6 @@ import org.expath.tools.ToolsException;
  * An abstract representation of an element (just provide the HTTP Client needs).
  *
  * @author Florent Georges
- * @date   2011-03-09
  */
 public interface Element
 {

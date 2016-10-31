@@ -24,7 +24,6 @@ import org.w3c.dom.ls.LSSerializer;
  * Trivial, in-memory implementation, for test purposes.
  *
  * @author Florent Georges
- * @date   2015-01-09
  */
 public class DomSequence
         implements Sequence

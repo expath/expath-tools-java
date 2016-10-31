@@ -17,7 +17,6 @@ import org.w3c.dom.Attr;
  * Trivial, in-memory implementation, for test purposes.
  *
  * @author Florent Georges
- * @date   2015-01-08
  */
 public class DomAttribute
         implements Attribute

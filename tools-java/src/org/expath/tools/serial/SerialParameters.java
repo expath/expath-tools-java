@@ -20,7 +20,6 @@ import org.expath.tools.model.Element;
  * A set of serialization parameters.
  * 
  * @author Florent Georges
- * @date   2015-01-08
  */
 public class SerialParameters
 {
@@ -44,71 +43,69 @@ public class SerialParameters
                 throw new ToolsException("No @" + SERIAL_VALUE_NAME + " on the element: {" + ns + "}" + name);
             }
             if ( SERIAL_NS_URI.equals(child_ns) ) {
-                switch ( child_name )
-                {
-                    case BYTE_ORDER_MARK_NAME :
-                        params.setByteOrderMark(value);
-                        break;
-                    case CDATA_SECTION_ELEMENTS_NAME :
-                        params.addCdataSectionElements(value, child);
-                        break;
-                    case DOCTYPE_PUBLIC_NAME :
-                        params.setDoctypePublic(value);
-                        break;
-                    case DOCTYPE_SYSTEM_NAME :
-                        params.setDoctypeSystem(value);
-                        break;
-                    case ENCODING_NAME :
-                        params.setEncoding(value);
-                        break;
-                    case ESCAPE_URI_ATTRIBUTES_NAME :
-                        params.setEscapeUriAttributes(value);
-                        break;
-                    case HTML_VERSION_NAME :
-                        params.setHtmlVersion(value);
-                        break;
-                    case INCLUDE_CONTENT_TYPE_NAME :
-                        params.setIncludeContentType(value);
-                        break;
-                    case INDENT_NAME :
-                        params.setIndent(value);
-                        break;
-                    case ITEM_SEPARATOR_NAME :
-                        params.setItemSeparator(value);
-                        break;
-                    case MEDIA_TYPE_NAME :
-                        params.setMediaType(value);
-                        break;
-                    case METHOD_NAME :
-                        // default namespace must not be used for method
-                        QName qname = value.indexOf(':') < 0
-                                ? new QName(value)
-                                : child.parseQName(value);
-                        params.setMethod(qname);
-                        break;
-                    case NORMALIZATION_FORM_NAME :
-                        params.setNormalizationForm(value);
-                        break;
-                    case OMIT_XML_DECLARATION_NAME :
-                        params.setOmitXmlDeclaration(value);
-                        break;
-                    case STANDALONE_NAME :
-                        params.setStandalone(value);
-                        break;
-                    case SUPPRESS_INDENTATION_NAME :
-                        params.addSuppressIndentation(value, child);
-                        break;
-                    case UNDECLARE_PREFIXES_NAME :
-                        params.setUndeclarePrefixes(value);
-                        break;
-                    case USE_CHARACTER_MAPS_NAME :
-                        params.addUseCharacterMaps(value, child);
-                        break;
-                    case VERSION_NAME :
-                        params.setVersion(value);
-                        break;
-                    default :
-                        throw new ToolsException("Unknown serialization param: {" + child_ns + "}" + child_name);
+                if ( BYTE_ORDER_MARK_NAME.equals(child_name) ) {
+                    params.setByteOrderMark(value);
+                }
+                else if ( CDATA_SECTION_ELEMENTS_NAME.equals(child_name) ) {
+                    params.addCdataSectionElements(value, child);
+                }
+                else if ( DOCTYPE_PUBLIC_NAME.equals(child_name) ) {
+                    params.setDoctypePublic(value);
+                }
+                else if ( DOCTYPE_SYSTEM_NAME.equals(child_name) ) {
+                    params.setDoctypeSystem(value);
+                }
+                else if ( ENCODING_NAME.equals(child_name) ) {
+                    params.setEncoding(value);
+                }
+                else if ( ESCAPE_URI_ATTRIBUTES_NAME.equals(child_name) ) {
+                    params.setEscapeUriAttributes(value);
+                }
+                else if ( HTML_VERSION_NAME.equals(child_name) ) {
+                    params.setHtmlVersion(value);
+                }
+                else if ( INCLUDE_CONTENT_TYPE_NAME.equals(child_name) ) {
+                    params.setIncludeContentType(value);
+                }
+                else if ( INDENT_NAME.equals(child_name) ) {
+                    params.setIndent(value);
+                }
+                else if ( ITEM_SEPARATOR_NAME.equals(child_name) ) {
+                    params.setItemSeparator(value);
+                }
+                else if ( MEDIA_TYPE_NAME.equals(child_name) ) {
+                    params.setMediaType(value);
+                }
+                else if ( METHOD_NAME.equals(child_name) ) {
+                    // default namespace must not be used for method
+                    QName qname = value.indexOf(':') < 0
+                        ? new QName(value)
+                        : child.parseQName(value);
+                    params.setMethod(qname);
+                }
+                else if ( NORMALIZATION_FORM_NAME.equals(child_name) ) {
+                    params.setNormalizationForm(value);
+                }
+                else if ( OMIT_XML_DECLARATION_NAME.equals(child_name) ) {
+                    params.setOmitXmlDeclaration(value);
+                }
+                else if ( STANDALONE_NAME.equals(child_name) ) {
+                    params.setStandalone(value);
+                }
+                else if ( SUPPRESS_INDENTATION_NAME.equals(child_name) ) {
+                    params.addSuppressIndentation(value, child);
+                }
+                else if ( UNDECLARE_PREFIXES_NAME.equals(child_name) ) {
+                    params.setUndeclarePrefixes(value);
+                }
+                else if ( USE_CHARACTER_MAPS_NAME.equals(child_name) ) {
+                    params.addUseCharacterMaps(value, child);
+                }
+                else if ( VERSION_NAME.equals(child_name) ) {
+                    params.setVersion(value);
+                }
+                else {
+                    throw new ToolsException("Unknown serialization param: {" + child_ns + "}" + child_name);
                 }
             }
             else {
@@ -562,7 +559,7 @@ public class SerialParameters
     private Set<QName> parseQNames(String value, Element scope)
             throws ToolsException
     {
-        Set<QName> qnames = new HashSet<>();
+        Set<QName> qnames = new HashSet<QName>();
         for ( String v : value.split("\\s+") ) {
             qnames.add(scope.parseQName(v));
         }
@@ -572,7 +569,7 @@ public class SerialParameters
     private Set<UseChar> parseCharMap(String value, Element scope)
             throws ToolsException
     {
-        Set<UseChar> result = new HashSet<>();
+        Set<UseChar> result = new HashSet<UseChar>();
         for ( Element elem : scope.children() ) {
             String ns = elem.getNamespaceUri();
             String name = elem.getLocalName();
@@ -588,7 +585,7 @@ public class SerialParameters
     }
 
     private Boolean myByteOrderMark;
-    private final Set<QName> myCdataSectionElements = new HashSet<>();
+    private final Set<QName> myCdataSectionElements = new HashSet<QName>();
     private String myDoctypePublic;
     private String myDoctypeSystem;
     private String myEncoding;
@@ -602,9 +599,9 @@ public class SerialParameters
     private String myNormalizationForm;
     private Boolean myOmitXmlDeclaration;
     private Standalone myStandalone;
-    private final Set<QName> mySuppressIndentation = new HashSet<>();
+    private final Set<QName> mySuppressIndentation = new HashSet<QName>();
     private Boolean myUndeclarePrefixes;
-    private final Set<UseChar> myUseCharacterMaps = new HashSet<>();
+    private final Set<UseChar> myUseCharacterMaps = new HashSet<UseChar>();
     private String myVersion;
 
     private ExtensionHandler myHandler;
