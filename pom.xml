@@ -19,9 +19,9 @@
     <description>Java Library implementing the core EXPath Tools</description>
 
     <scm>
-        <connection>scm:git:git://github.com/expath/expath-tools-java.git</connection>
-        <developerConnection>scm:git:git://github.com/expath/expath-tools-java.git</developerConnection>
-        <url>http://github.com/expath/expath-tools-java</url>
+        <connection>scm:git:https://github.com/expath/expath-tools-java.git</connection>
+        <developerConnection>scm:git:https://github.com/expath/expath-tools-java.git</developerConnection>
+        <url>scm:git:https://github.com/expath/expath-tools-java.git</url>
     </scm>
 
     <dependencies>
