@@ -111,8 +111,10 @@ public interface Element
      * Return the content of the element (the content of the child:: axis).
      * 
      * @return The sequence.
+     *
+     * @throws ToolsException if an error occurs whilst retrieving the content
      */
-    Sequence getContent();
+    Sequence getContent() throws ToolsException;
 
     /**
      * Parse a literal QName using the namespace bindings in scope on the element.
