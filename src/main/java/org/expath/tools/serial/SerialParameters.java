@@ -118,6 +118,10 @@ public class SerialParameters
 
     /**
      * Set an extension handler.
+     *
+     * @param handler the extension handler
+     *
+     * @throws ToolsException if an error occurs whilst setting the handler
      */
     public void setExtensionHandler(ExtensionHandler handler)
             throws ToolsException {
@@ -129,6 +133,12 @@ public class SerialParameters
      * 
      * If the property is not known by the specific implementation, it must
      * raise a technical exception.
+     *
+     * @param n the qualified name of the property
+     *
+     * @return the value of the property
+     *
+     * @throws ToolsException if an error occurs whilst retrieving the property
      */
     public String getExtension(QName n)
             throws ToolsException {
@@ -143,6 +153,11 @@ public class SerialParameters
      * 
      * If the property is not known by the specific implementation, it must
      * raise a technical exception.
+     *
+     * @param n the qualified name of the property
+     * @param v the value of the property
+     *
+     * @throws ToolsException if an error occurs whilst setting the property
      */
     public void setExtension(QName n, String v)
             throws ToolsException {
@@ -154,6 +169,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code byte-order-mark}.
+     *
+     * @return true if a byte-order-mark is present
      */
     public Boolean getByteOrderMark() {
         return myByteOrderMark;
@@ -161,6 +178,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code byte-order-mark}.
+     *
+     * @param v the byte-order-mark flag
      */
     public void setByteOrderMark(Boolean v) {
         myByteOrderMark = v;
@@ -168,6 +187,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code byte-order-mark}.
+     *
+     * @param v the byte-order-mark flag
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setByteOrderMark(String v) throws ToolsException {
         setByteOrderMark(parseBoolean(v));
@@ -175,6 +198,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code cdata-section-elements}.
+     *
+     * @return the iterable
      */
     public Iterable<QName> getCdataSectionElements() {
         return myCdataSectionElements;
@@ -182,6 +207,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code cdata-section-elements}.
+     *
+     * @param v the iterable
      */
     public void addCdataSectionElements(Iterable<QName> v) {
         for ( QName q : v ) {
@@ -191,6 +218,11 @@ public class SerialParameters
 
     /**
      * Set the output property {@code cdata-section-elements}.
+     *
+     * @param v the qualified name
+     * @param scope the element scope
+     *
+     * @throws ToolsException if the qualified name cannot be parsed correctly
      */
     public void addCdataSectionElements(String v, Element scope) throws ToolsException {
         addCdataSectionElements(parseQNames(v, scope));
@@ -198,6 +230,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code doctype-public}.
+     *
+     * @return the public doc-type
      */
     public String getDoctypePublic() {
         return myDoctypePublic;
@@ -205,6 +239,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code doctype-public}.
+     *
+     * @param v the public doc-type
      */
     public void setDoctypePublic(String v) {
         myDoctypePublic = v;
@@ -212,6 +248,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code doctype-system}.
+     *
+     * @return the system doc-type
      */
     public String getDoctypeSystem() {
         return myDoctypeSystem;
@@ -219,6 +257,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code doctype-system}.
+     *
+     * @param v the system doc-type
      */
     public void setDoctypeSystem(String v) {
         myDoctypeSystem = v;
@@ -226,6 +266,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code encoding}.
+     *
+     * @return the encoding
      */
     public String getEncoding() {
         return myEncoding;
@@ -233,6 +275,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code encoding}.
+     *
+     * @param v the encoding
      */
     public void setEncoding(String v) {
         myEncoding = v;
@@ -240,6 +284,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code escape-uri-attributes}.
+     *
+     * @return the escape-uri-attributes flag
      */
     public Boolean getEscapeUriAttributes() {
         return myEscapeUriAttributes;
@@ -247,6 +293,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code escape-uri-attributes}.
+     *
+     * @param v the escape-uri-attributes flag
      */
     public void setEscapeUriAttributes(Boolean v) {
         myEscapeUriAttributes = v;
@@ -254,6 +302,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code escape-uri-attributes}.
+     *
+     * @param v the escape-uri-attributes flag
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setEscapeUriAttributes(String v) throws ToolsException {
         setEscapeUriAttributes(parseBoolean(v));
@@ -261,6 +313,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code html-version}.
+     *
+     * @return the html version
      */
     public Double getHtmlVersion() {
         return myHtmlVersion;
@@ -268,6 +322,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code html-version}.
+     *
+     * @param v the html version
      */
     public void setHtmlVersion(Double v) {
         myHtmlVersion = v;
@@ -275,6 +331,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code html-version}.
+     *
+     * @param v the html version
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setHtmlVersion(String v) throws ToolsException {
         setHtmlVersion(parseDecimal(v));
@@ -282,6 +342,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code include-content-type}.
+     *
+     * @return the include-content-type flag
      */
     public Boolean getIncludeContentType() {
         return myIncludeContentType;
@@ -289,6 +351,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code include-content-type}.
+     *
+     * @param v the include-content-type flag
      */
     public void setIncludeContentType(Boolean v) {
         myIncludeContentType = v;
@@ -296,6 +360,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code include-content-type}.
+     *
+     * @param v the include-content-type flag
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setIncludeContentType(String v) throws ToolsException {
         setIncludeContentType(parseBoolean(v));
@@ -303,6 +371,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code indent}.
+     *
+     * @return the indent flag
      */
     public Boolean getIndent() {
         return myIndent;
@@ -310,6 +380,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code indent}.
+     *
+     * @param v the indent flag
      */
     public void setIndent(Boolean v) {
         myIndent = v;
@@ -317,6 +389,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code indent}.
+     *
+     * @param v the indent flag
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setIndent(String v) throws ToolsException {
         setIndent(parseBoolean(v));
@@ -324,6 +400,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code item-separator}.
+     *
+     * @return the item separator
      */
     public String getItemSeparator() {
         return myItemSeparator;
@@ -331,6 +409,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code item-separator}.
+     *
+     * @param v the item separator
      */
     public void setItemSeparator(String v) {
         myItemSeparator = v;
@@ -338,6 +418,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code media-type}.
+     *
+     * @return the media-type
      */
     public String getMediaType() {
         return myMediaType;
@@ -345,6 +427,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code media-type}.
+     *
+     * @param v the media-type
      */
     public void setMediaType(String v) {
         myMediaType = v;
@@ -352,6 +436,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code method}.
+     *
+     * @return the output method
      */
     public QName getMethod() {
         return myMethod;
@@ -359,6 +445,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code method}.
+     *
+     * @param v the output method
      */
     public void setMethod(QName v) {
         myMethod = v;
@@ -366,6 +454,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code normalization-form}.
+     *
+     * @return the normalized-form
      */
     public String getNormalizationForm() {
         return myNormalizationForm;
@@ -373,6 +463,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code normalization-form}.
+     *
+     * @param v the normalized-form
      */
     public void setNormalizationForm(String v) {
         myNormalizationForm = v;
@@ -380,6 +472,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code omit-xml-declaration}.
+     *
+     * @return the omit-xml-declaration flag
      */
     public Boolean getOmitXmlDeclaration() {
         return myOmitXmlDeclaration;
@@ -387,6 +481,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code omit-xml-declaration}.
+     *
+     * @param v the omit-xml-declaration flag
      */
     public void setOmitXmlDeclaration(Boolean v) {
         myOmitXmlDeclaration = v;
@@ -394,6 +490,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code omit-xml-declaration}.
+     *
+     * @param v the omit-xml-declaration flag
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setOmitXmlDeclaration(String v) throws ToolsException {
         setOmitXmlDeclaration(parseBoolean(v));
@@ -401,6 +501,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code standalone}.
+     *
+     * @return standalone
      */
     public Standalone getStandalone() {
         return myStandalone;
@@ -408,6 +510,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code standalone}.
+     *
+     * @param v standalone
      */
     public void setStandalone(Standalone v) {
         myStandalone = v;
@@ -415,6 +519,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code standalone}.
+     *
+     * @param v standalone
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setStandalone(String v) throws ToolsException {
         setStandalone(parseStandalone(v));
@@ -422,6 +530,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code suppress-indentation}.
+     *
+     * @return suppress indentation iterable
      */
     public Iterable<QName> getSuppressIndentation() {
         return mySuppressIndentation;
@@ -429,6 +539,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code suppress-indentation}.
+     *
+     * @param v suppress indentation iterable
      */
     public void addSuppressIndentation(Iterable<QName> v) {
         for ( QName q : v ) {
@@ -438,6 +550,11 @@ public class SerialParameters
 
     /**
      * Set the output property {@code suppress-indentation}.
+     *
+     * @param v the qualified name
+     * @param scope the element scope
+     *
+     * @throws ToolsException if the qualified name cannot be parsed correctly
      */
     public void addSuppressIndentation(String v, Element scope) throws ToolsException {
         addSuppressIndentation(parseQNames(v, scope));
@@ -445,6 +562,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code undeclare-prefixes}.
+     *
+     * @return undeclare-prefixes flag
      */
     public Boolean getUndeclarePrefixes() {
         return myUndeclarePrefixes;
@@ -452,6 +571,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code undeclare-prefixes}.
+     *
+     * @param v undeclare-prefixes flag
      */
     public void setUndeclarePrefixes(Boolean v) {
         myUndeclarePrefixes = v;
@@ -459,6 +580,10 @@ public class SerialParameters
 
     /**
      * Set the output property {@code undeclare-prefixes}.
+     *
+     * @param v undeclare-prefixes flag
+     *
+     * @throws ToolsException if the string cannot be parsed correctly
      */
     public void setUndeclarePrefixes(String v) throws ToolsException {
         setUndeclarePrefixes(parseBoolean(v));
@@ -466,6 +591,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code use-character-maps}.
+     *
+     * @return use-character-maps iterable
      */
     public Iterable<UseChar> getUseCharacterMaps() {
         return myUseCharacterMaps;
@@ -473,6 +600,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code use-character-maps}.
+     *
+     * @param v use-character-maps iterable
      */
     public void addUseCharacterMaps(Iterable<UseChar> v) {
         for ( UseChar q : v ) {
@@ -482,6 +611,11 @@ public class SerialParameters
 
     /**
      * Set the output property {@code use-character-maps}.
+     *
+     * @param v the qualified name
+     * @param scope the element scope
+     *
+     * @throws ToolsException if the qualified name cannot be parsed correctly
      */
     public void addUseCharacterMaps(String v, Element scope) throws ToolsException {
         addUseCharacterMaps(parseCharMap(v, scope));
@@ -489,6 +623,8 @@ public class SerialParameters
 
     /**
      * Get the output property {@code version}.
+     *
+     * @return the version
      */
     public String getVersion() {
         return myVersion;
@@ -496,6 +632,8 @@ public class SerialParameters
 
     /**
      * Set the output property {@code version}.
+     *
+     * @param v the version
      */
     public void setVersion(String v) {
         myVersion = v;

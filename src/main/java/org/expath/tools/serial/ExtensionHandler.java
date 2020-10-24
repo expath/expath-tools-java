@@ -25,8 +25,14 @@ public interface ExtensionHandler
      * 
      * If the property is not known by the specific implementation, it must
      * raise a technical exception.
+     *
+     * @param name the qualified name of the property
+     *
+     * @return the value of the property
+     *
+     * @throws ToolsException if an error occurs whilst retrieving the property
      */
-    public String getExtension(QName name)
+    String getExtension(QName name)
             throws ToolsException;
 
     /**
@@ -34,8 +40,13 @@ public interface ExtensionHandler
      * 
      * If the property is not known by the specific implementation, it must
      * raise a technical exception.
+     *
+     * @param name the qualified name of the property
+     * @param value the value of the property
+     *
+     * @throws ToolsException if an error occurs whilst setting the property
      */
-    public void setExtension(QName name, String value)
+    void setExtension(QName name, String value)
             throws ToolsException;
 }
 

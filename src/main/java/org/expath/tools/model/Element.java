@@ -25,7 +25,7 @@ public interface Element
      * @return The local part of the name of the element, cannot be {@code null}
      * nor empty.
      */
-    public String getLocalName();
+    String getLocalName();
 
     /**
      * Return the namespace URI part of the name of the element.
@@ -33,7 +33,7 @@ public interface Element
      * @return The empty string if the name is in no namespace (never return
      * {@code null}).
      */
-    public String getNamespaceUri();
+    String getNamespaceUri();
 
     /**
      * Get the display name of the element.
@@ -45,7 +45,7 @@ public interface Element
      * 
      * @return The display name of the element, cannot be {@code null} nor empty.
      */
-    public String getDisplayName();
+    String getDisplayName();
 
     /**
      * Return the value of an attribute.
@@ -55,28 +55,28 @@ public interface Element
      *
      * @return The value of the attribute, or null if it does not exist.
      */
-    public String getAttribute(String local_name);
+    String getAttribute(String local_name);
 
     /**
      * Iterate through the attributes.
      * 
      * @return The iterator.
      */
-    public Iterable<Attribute> attributes();
+    Iterable<Attribute> attributes();
 
     /**
      * Return true if this element has at least one child in no namespace.
      * 
      * @return {@code true} if there is any child in no namespace.
      */
-    public boolean hasNoNsChild();
+    boolean hasNoNsChild();
 
     /**
      * Iterate through the children elements.
      * 
      * @return The iterator.
      */
-    public Iterable<Element> children();
+    Iterable<Element> children();
 
     /**
      * Iterate through the children elements in a specific namespace.
@@ -85,7 +85,7 @@ public interface Element
      * 
      * @return The iterator.
      */
-    public Iterable<Element> children(String ns);
+    Iterable<Element> children(String ns);
 
     /**
      * Check the element {@code elem} does not have attributes other than {@code names}.
@@ -104,7 +104,7 @@ public interface Element
      * forbidden namespaces, or in no namespace and the name of which is not in
      * {@code names}.
      */
-    public void noOtherNCNameAttribute(String[] names, String[] forbidden_ns)
+    void noOtherNCNameAttribute(String[] names, String[] forbidden_ns)
             throws ToolsException;
 
     /**
@@ -112,7 +112,7 @@ public interface Element
      * 
      * @return The sequence.
      */
-    public Sequence getContent();
+    Sequence getContent();
 
     /**
      * Parse a literal QName using the namespace bindings in scope on the element.
@@ -120,8 +120,10 @@ public interface Element
      * @param value The literal QName to parse.
      * 
      * @return The parsed QName.
+     *
+     * @throws ToolsException if an error occurs whilst parsing the QName
      */
-    public QName parseQName(String value)
+    QName parseQName(String value)
             throws ToolsException;
 }
 
